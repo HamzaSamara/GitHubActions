@@ -1,6 +1,9 @@
 name: Check VM Resources
 
-on: [push]
+on:
+  push:
+    paths:
+      - '.github/workflows/file#01-Check-VM-Resources-And-Info.yml'  # Path to the specific file
 
 jobs:
   build:
