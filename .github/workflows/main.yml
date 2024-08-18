@@ -3,13 +3,10 @@ name: Check VM Resources
 on: [push]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
-
-
-  steps:
-
+    
+    steps:
       - name: Check CPU Info
         run: lscpu
         
