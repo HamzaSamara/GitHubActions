@@ -18,10 +18,7 @@ jobs:
         
       - name: Check Operating System Details
         run: uname -a
-
-      - name: Check Available Storage
-        run: du -sh / 
-
+        
       - name: Check current user
         run: whoami
 
