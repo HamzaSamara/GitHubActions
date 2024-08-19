@@ -1,0 +1,42 @@
+name: Run Docker Image, Show Databases, and Tables
+
+on:
+  push:
+    paths: .github/workflows/file#02-Docker-MySQL.yml
+
+jobs:
+  run-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Pull and run Docker image
+        run: |
+          docker pull hamzasamara/mysql-01
+          docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=rootpassword hamzasamara/mysql-01
+      - name: Wait for MySQL to be ready
+        run: |
+          until docker exec mysql-container mysqladmin ping -uroot -prootpassword --silent; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 3
+          done
+      - name: Show databases
+        id: show-databases
+        run: |
+          docker exec mysql-container mysql -uroot -prootpassword -e "SHOW DATABASES;"
+          
+      - name: Show School Database Tables
+        run: docker exec mysql-container mysql -uroot -prootpassword -e "USE school; SHOW TABLES;"
+
+      - name: Display Table content
+        run: docker exec mysql-container mysql -uroot -prootpassword -e "USE school; SHOW TABLES; SELECT * FROM students;"
+
+      - name: Clean up
+        run: |
+          docker stop mysql-container
+          docker rm mysql-container
