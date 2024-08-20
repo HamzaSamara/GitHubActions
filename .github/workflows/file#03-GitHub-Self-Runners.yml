@@ -2,7 +2,7 @@ name: GitHub Action with Self Runner
 
 on:
   push:
-    paths: .github/workflows/ file#03-GitHub-Self-Runners.yml
+    paths: .github/workflows/file#03-GitHub-Self-Runners.yml
 
 jobs:
   build:
@@ -25,5 +25,5 @@ jobs:
         pip install pytest
     - name: Run tests
       run: |
-        cd src
+        cd file#03-GitHub-Self-Runners
         python -m pytest addition.py
